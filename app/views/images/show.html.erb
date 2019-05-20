@@ -1,0 +1,18 @@
+<div>
+  <p>
+    <% if @image.errors.any? %>
+      <div id='error_explaination'>
+        <h7>
+          <%= pluralize(@image.errors.count, 'error') %> prohibited this image from being saved
+        </h7>
+        <ul>
+          <% @image.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+    <label>The image is :</label>
+    <img src=<%=@image.image_url%> />
+  </p>
+</div>
