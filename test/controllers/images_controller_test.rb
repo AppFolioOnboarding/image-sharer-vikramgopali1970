@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ImagesControllerTest < ActionDispatch::IntegrationTest
   def test_new__valid
-    get '/'
+    get '/images/new'
     assert_select 'h1', 'Enter the image url to save and view'
     assert_select 'label', 'Image URL'
   end
@@ -38,5 +38,20 @@ RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY')
     get image_path(image.id)
     assert_response :ok
     assert_select 'label', 'The image is :'
+  end
+
+  def test_index__images_in_newest_first_order
+    urls = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDfTyM82Txl7p2ghgko3GkPQjlA8SPZ5MhxBC7042O-CGyrm-Y',
+            'https://makeoffices.com/wp-content/uploads/2016/10/MakeOffices-Bethesda-Bullpen.jpg']
+    Image.create(image_url: urls[0])
+    Image.create(image_url: urls[1])
+    get root_url
+    assert_response :ok
+    assert_select 'h1', 'Images List'
+    images = assert_select 'img'
+    assert_equal urls[1], images.first[:src]
+    assert_equal urls[0], images.last[:src]
+    assert_equal '400', images.first[:width]
+    assert_equal '400', images.last[:width]
   end
 end
