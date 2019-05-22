@@ -1,28 +1,10 @@
-<div class='container'>
+<div class='container mt-4'>
   <div>
-    <%= form_with scope: :image, url: images_path do |form| %>
-        <h1>Enter the image url to save and view</h1>
-        <% if @image.errors.any? %>
-            <div id='error_explaination'>
-              <h7>
-                <%= pluralize(@image.errors.count, 'error') %> prohibited this image from being saved
-              </h7>
-              <ul>
-                <% @image.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-                    <% end %>
-              </ul>
-            </div>
-        <% end %>
-        <p>
-          <label>Image URL</label>
-          <%= form.text_field :image_url %>
-        </p>
-        <p>
-          <%= form.submit :submit %>
-        </p>
+    <%= simple_form_for @image,defaults: { required: false } do |f| %>
+        <div>
+          <%= f.input :image_url, label: 'Enter the Image URL to be saved : ', error: @image.errors.messages %>
+        </div>
+        <%= f.button :submit, 'save image', :class=> 'btn-dark' %>
     <% end %>
-    <%= link_to 'Back', images_path %>
   </div>
 </div>
-

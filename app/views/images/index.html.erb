@@ -1,12 +1,17 @@
 <div class="container">
-  <table>
-    <tr>
-      <th><h1>Images List</h1></th>
-    </tr>
-    <% @images.each do |img| %>
-        <tr>
-          <td><img width="400" src=<%= img.image_url %> /></td>
-        </tr>
-    <% end %>
-  </table>
+  <h1 class="image-list-title">Images List</h1>
+  <% @images.in_groups_of(2,false).each do |image_group| %>
+    <div class="row mt-5">
+      <% image_group.each do |image|%>
+        <div class="col col-md-4">
+          <div class="card" >
+            <img width="400" class="img-card" src=<%= image.image_url %> alt="...">
+            <div class="card-body">
+              <p class="card-text text-truncate">Image URL : <%= image.image_url %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
