@@ -3,8 +3,8 @@ require 'test_helper'
 class ImagesControllerTest < ActionDispatch::IntegrationTest
   def test_new__valid
     get '/images/new'
-    assert_select 'h1', 'Enter the image url to save and view'
-    assert_select 'label', 'Image URL'
+    assert_select 'label', 'Enter the Image URL to be saved :'
+    assert_select '#image_image_url'
   end
 
   def test_create__valid_url
@@ -18,17 +18,14 @@ RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY' } }
   def test_create__blank_url
     post images_path, params: { image: { image_url: '' } }
     assert_response :ok
-    assert_select 'h7', '2 errors prohibited this image from being saved'
-    assert_select 'li', 'Image url is invalid'
-    assert_select 'li', "Image url can't be blank"
+    assert_select 'div', "Image url is invalid and Image url can't be blank"
   end
 
   def test_create__invalid_url
     post images_path, params: { image: { image_url: 'httncrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTf3Ry
                                                   ZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY' } }
     assert_response :ok
-    assert_select 'h7', '1 error prohibited this image from being saved'
-    assert_select 'li', 'Image url is invalid'
+    assert_select 'div', 'Image url is invalid'
   end
 
   def test_show__valid
@@ -37,7 +34,7 @@ RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY')
     image = Image.last
     get image_path(image.id)
     assert_response :ok
-    assert_select 'label', 'The image is :'
+    assert_select 'h2', 'The image is :'
   end
 
   def test_index__images_in_newest_first_order
