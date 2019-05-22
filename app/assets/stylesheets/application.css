@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+.img-card{
+    max-width:400px;
+    width: 100%;
+    max-height: 400px;
+    height:100%;
+}
+
+.image-list-title{
+    text-align: center;
+    margin:25px;
+}
