@@ -50,3 +50,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # Using simple_form for developing forms
 gem 'simple_form'
+
+# Using acts_as_taggable_on for adding tags to the images
+gem 'acts-as-taggable-on', '~> 6.0'
