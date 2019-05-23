@@ -7,7 +7,13 @@
           <div class="card" >
             <img width="400" class="img-card" src=<%= image.image_url %> alt="...">
             <div class="card-body">
-              <p class="card-text text-truncate">Image URL : <%= image.image_url %></p>
+              <% if image.tag_list.count > 0 %>
+                <% image.tag_list.each do |tag| %>
+                      <span class="badge badge-pill badge-dark"><%= tag %></span>
+                <% end %>
+              <% else %>
+                  <p class="card-text text-truncate"><span>Image Url : </span><%= image.image_url %></p>
+              <% end %>
             </div>
           </div>
         </div>
