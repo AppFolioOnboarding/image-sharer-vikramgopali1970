@@ -7,7 +7,7 @@ class ImagesController < ApplicationController
 
   def create
     @image = Image.new(image_params)
-
+    @image.tag_list = params[:image][:tag_list]
     if !@image.valid?
       render 'new'
     else
@@ -27,6 +27,6 @@ class ImagesController < ApplicationController
   private
 
   def image_params
-    params.require(:image).permit(:image_url)
+    params.require(:image).permit(:image_url, :tag_list)
   end
 end

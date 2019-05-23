@@ -15,6 +15,22 @@ RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY' } }
     assert_redirected_to image_path(Image.last)
   end
 
+  def test_create__image_with_tags
+    assert_difference('Image.count') do
+      post images_url, params: { image: { image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTf3
+RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY', tag_list: 'office, work' } }
+    end
+    assert_redirected_to image_path(Image.last)
+  end
+
+  def test_create__image_without_tags
+    assert_difference('Image.count') do
+      post images_url, params: { image: { image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTf3
+RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY', tag_list: '' } }
+    end
+    assert_redirected_to image_path(Image.last)
+  end
+
   def test_create__blank_url
     post images_path, params: { image: { image_url: '' } }
     assert_response :ok
