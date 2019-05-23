@@ -3,6 +3,7 @@
     <%= simple_form_for @image,defaults: { required: false } do |f| %>
         <div>
           <%= f.input :image_url, label: 'Enter the Image URL to be saved : ', error: @image.errors.messages %>
+          <%= f.input :tag_list, label: 'Add Tags : ' %>
         </div>
         <%= f.button :submit, 'save image', :class=> 'btn-dark' %>
     <% end %>

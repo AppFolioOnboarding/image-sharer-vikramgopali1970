@@ -15,6 +15,22 @@ RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY' } }
     assert_redirected_to image_path(Image.last)
   end
 
+  def test_create__image_with_tags
+    assert_difference('Image.count') do
+      post images_url, params: { image: { image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTf3
+RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY', tag_list: 'office, work' } }
+    end
+    assert_redirected_to image_path(Image.last)
+  end
+
+  def test_create__image_without_tags
+    assert_difference('Image.count') do
+      post images_url, params: { image: { image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTf3
+RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY', tag_list: '' } }
+    end
+    assert_redirected_to image_path(Image.last)
+  end
+
   def test_create__blank_url
     post images_path, params: { image: { image_url: '' } }
     assert_response :ok
@@ -50,5 +66,30 @@ RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY')
     assert_equal urls[0], images.last[:src]
     assert_equal '400', images.first[:width]
     assert_equal '400', images.last[:width]
+  end
+
+  def test_index__images_with_tags
+    urls = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDfTyM82Txl7p2ghgko3GkPQjlA8SPZ5MhxBC7042O-CGyrm-Y']
+    Image.create(image_url: urls[0], tag_list: 'work, office')
+    get root_url
+    assert_response :ok
+    assert_select 'h1', 'Images List'
+    images = assert_select 'img'
+    assert_equal urls[0], images.first[:src]
+    assert_equal '400', images.first[:width]
+    assert_select 'span', 'work'
+    assert_select 'span', 'office'
+  end
+
+  def test_index__images_without_tags_displays_url
+    urls = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDfTyM82Txl7p2ghgko3GkPQjlA8SPZ5MhxBC7042O-CGyrm-Y']
+    Image.create(image_url: urls[0])
+    get root_url
+    assert_response :ok
+    assert_select 'h1', 'Images List'
+    images = assert_select 'img'
+    assert_equal urls[0], images.first[:src]
+    assert_equal '400', images.first[:width]
+    assert_select 'p', 'Image Url : ' + urls[0]
   end
 end
