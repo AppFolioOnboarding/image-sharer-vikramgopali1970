@@ -22,6 +22,12 @@ class ImagesController < ApplicationController
 
   def index
     @images = Image.order(created_at: :desc)
+    if params[:tag].present? && Image.tagged_with(params[:tag]).count.zero?
+      flash.now[:error] = params[:tag] + ' tag is not available.'
+    elsif params[:tag].present?
+      @images = Image.tagged_with(params[:tag])
+      @filter_tag = params[:tag]
+    end
   end
 
   private
