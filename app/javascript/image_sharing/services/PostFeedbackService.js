@@ -1,7 +1,3 @@
-import { post } from "../utils/helper";
-
-export class PostFeedbackService {
+export default class PostFeedbackService {
   /* Implement your service */
 }
-
-export default PostFeedbackService;
