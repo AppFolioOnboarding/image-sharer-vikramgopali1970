@@ -33,6 +33,7 @@
   },
   "scripts": {
     "lint": "eslint app/javascript",
+    "lint:fix": "eslint --fix app/javascript",
     "test": "mocha --recursive --compilers js:babel-register --require app/javascript/testHelpers.js --require ignore-styles app/javascript/**/test"
   }
 }
