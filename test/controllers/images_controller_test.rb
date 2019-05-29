@@ -92,4 +92,21 @@ RyZZVjGm23hkH1Lp1xndGGSkv6OlCkRtixg_f3siyp9UAY')
     assert_equal '400', images.first[:width]
     assert_select 'p', 'Image Url : ' + urls[0]
   end
+
+  def test_index__filter_images_with_existing_tags
+    Image.create(image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDfTyM82Txl7p2ghgko3GkPQjlA8SPZ5Mhx
+BC7042O-CGyrm-Y', tag_list: 'office, work')
+    get '/?tag=office'
+    assert_response :ok
+    assert_select 'span', 'Filtered tags :'
+    assert_select 'span', 'office'
+  end
+
+  def test_index__filter_images_with_non_existing_tags
+    Image.create(image_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDfTyM82Txl7p2ghgko3GkPQjlA8SPZ5Mhx
+BC7042O-CGyrm-Y', tag_list: 'office, work')
+    get '/?tag=apple'
+    assert_response :ok
+    assert_select 'div', 'apple tag is not available.'
+  end
 end

@@ -1,5 +1,12 @@
 <div class="container">
   <h1 class="image-list-title">Images List</h1>
+  <% if @filter_tag.blank? == false %>
+    <span> Filtered tags : </span>
+    <span class="badge badge-pill badge-dark"><%= @filter_tag %></span>
+  <% end %>
+  <% flash.each do |name, msg| %>
+    <%= content_tag :div, msg, class: "alert alert-danger col-md-6" %>
+  <% end %>
   <% @images.in_groups_of(2,false).each do |image_group| %>
     <div class="row mt-5">
       <% image_group.each do |image|%>
@@ -9,7 +16,7 @@
             <div class="card-body">
               <% if image.tag_list.count > 0 %>
                 <% image.tag_list.each do |tag| %>
-                      <span class="badge badge-pill badge-dark"><%= tag %></span>
+                      <a href="/?tag=<%= tag %>"><span class="badge badge-pill badge-dark"><%= tag %></span></a>
                 <% end %>
               <% else %>
                   <p class="card-text text-truncate"><span>Image Url : </span><%= image.image_url %></p>
@@ -21,3 +28,4 @@
     </div>
   <% end %>
 </div>
+
