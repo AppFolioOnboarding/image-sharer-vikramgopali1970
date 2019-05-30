@@ -15,6 +15,7 @@ class FeedbackForm extends Component {
     super(props);
     this.updateName = this.updateName.bind(this);
     this.updateComment = this.updateComment.bind(this);
+    this.postFeedback = this.postFeedback.bind(this);
   }
 
   updateName(event) {
@@ -25,12 +26,17 @@ class FeedbackForm extends Component {
     this.props.stores.feedbackStore.updateComments(event.target.value);
   }
 
+  postFeedback() {
+    this.props.stores.feedbackStore.postFeedBack();
+  }
+
   render() {
     return (
       <div className="container">
         <Row>
           <Col md={{ size: 4, offset: 4 }}>
             <Form>
+
               <FormGroup>
                 <Label for="name">Your Name:</Label>
                 <Input
@@ -51,7 +57,7 @@ class FeedbackForm extends Component {
                   onChange={this.updateComment}
                 />
               </FormGroup>
-              <Button color="primary">Submit</Button>
+              <Button color="primary" onClick={this.postFeedback}>Submit</Button>
             </Form>
           </Col>
         </Row>
